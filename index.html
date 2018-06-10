@@ -12,18 +12,21 @@
 
     <canvas id = "playground" width="500" height="200"></canvas>
     <script type="text/javascript">
-    var run = function(){
+
+
+
     var canvas = document.getElementById("playground");
     var ctx = canvas.getContext('2d');
     var xSpaceBetweenPipe = 100;
     var ySpaceBetweenPipe = 80;
+    var pipesDestroied = 0;
 
-
+    // KeyBoard Input to control the flappy
     var KEYBOARD = {
       "UP": 10
     };
 
-
+    // The condinates of pipes
     var pipes = [
       {
         x: 250,
@@ -47,12 +50,53 @@
       }
     ];
 
+    // flappy image loading
+    var flappy = new Image();
+
+    // Pipe image loading
+    var pipe = new Image();
+    pipe.src = "images/pipe.png";
+
+    start();
+
+    function start(){
+      setInterval(draw, 20);
+    }
+
+    // To randomiza the pipes length
     function randomY(){
       return Math.floor(Math.random() * (200 - ySpaceBetweenPipe)) + ySpaceBetweenPipe / 2;
     }
-    console.log(pipes);
+
+
+    function draw(){
+      pipesPassedInScreen = 0;
+      ctx.clearRect(0,0,500,200);
+
+      //moving the pipes from right to left
+      pipes.forEach(function (pipePos){
+        pipePos.x -= 1;
+      });
+
+      // adding new pipe if one pipe is outside the frame
+      if (pipes[0].x + 25 <= 0){
+        pipes.shift();
+        pipes.push({x: pipes[pipes.length - 1].x+150, y: randomY()});
+        pipesDestroied++;
+      }
+
+
+      pipes.forEach(function (pipePos) {
+        ctx.drawImage(pipe, (pipePos.x - 25), (pipePos.y + (ySpaceBetweenPipe / 2)), 50, 154);
+        ctx.save();
+        ctx.scale(1, -1);
+        ctx.drawImage(pipe, (pipePos.x - 25), -(pipePos.y - (ySpaceBetweenPipe / 2)), 50, 154);
+        ctx.restore();
+      });
     }
-    run();
+
+    console.log(pipes);
+
 
     </script>
 
