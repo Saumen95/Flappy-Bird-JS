@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      #playground {
+        border : 1px solid black;
+      }
+    </style>
+  </head>
+
+  <body>
+
+    <canvas id = "playground" width="500" height="200"></canvas>
+    <script type="text/javascript">
+    var run = function(){
+    var canvas = document.getElementById("playground");
+    var ctx = canvas.getContext('2d');
+    var xSpaceBetweenPipe = 100;
+    var ySpaceBetweenPipe = 80;
+
+
+    var KEYBOARD = {
+      "UP": 10
+    };
+
+
+    var pipes = [
+      {
+        x: 250,
+        y: randomY()
+      },
+      {
+        x: 400,
+        y: randomY()
+      },
+      {
+        x: 550,
+        y: randomY()
+      },
+      {
+        x: 700,
+        y: randomY()
+      },
+      {
+        x: 850,
+        y: randomY()
+      }
+    ];
+
+    function randomY(){
+      return Math.floor(Math.random() * (200 - ySpaceBetweenPipe)) + ySpaceBetweenPipe / 2;
+    }
+    console.log(pipes);
+    }
+    run();
+
+    </script>
+
+  </body>
+</html>
